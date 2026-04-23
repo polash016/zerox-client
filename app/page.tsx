@@ -5,6 +5,8 @@ import { Services } from "@/components/sections/services";
 import { Platform } from "@/components/sections/platform";
 import { ImportGenius } from "@/components/sections/import-genius";
 import { WhyZerox } from "@/components/sections/why-zerox";
+import { Testimonials } from "@/components/sections/testimonials";
+import { Pricing } from "@/components/sections/pricing";
 import { FAQ } from "@/components/sections/faq";
 import { Ticker } from "@/components/sections/ticker";
 import { CTA } from "@/components/sections/cta";
@@ -28,6 +30,8 @@ export default function HomePage() {
         <Platform />
         <ImportGenius />
         <WhyZerox />
+        <Testimonials />
+        <Pricing />
         <FAQ />
         <Ticker />
         <CTA />

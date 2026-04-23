@@ -23,6 +23,8 @@ import {
   Globe,
   MessageCircle,
   X,
+  BarChart2,
+  Settings,
   type LucideIcon,
 } from "lucide-react";
 
@@ -51,6 +53,8 @@ const map: Record<string, LucideIcon> = {
   globe: Globe,
   "message-circle": MessageCircle,
   x: X,
+  "bar-chart-2": BarChart2,
+  settings: Settings,
 };
 
 interface IconProps {

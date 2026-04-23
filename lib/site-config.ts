@@ -59,6 +59,7 @@ export const nav = [
   { label: "Platform", href: "#platform" },
   { label: "Import Genius", href: "#import-genius" },
   { label: "Why Us", href: "#why-us" },
+  { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ] as const;
@@ -178,6 +179,102 @@ export const whyZerox = [
     desc: "Real-time Socket architecture, multi-tenant infrastructure, and systems that handle 100 or 10,000 orders without breaking.",
   },
 ];
+
+export const testimonials = [
+  {
+    name: "Rafiul Islam",
+    role: "CEO, Aarong Lifestyle",
+    quote:
+      "Zerox transformed how we manage orders across 4 stores. Real-time streaming means our team never misses a beat — revenue up 38% in 3 months.",
+    stars: 5,
+  },
+  {
+    name: "Nadia Hossain",
+    role: "Head of Growth, Chaldal",
+    quote:
+      "Their landing pages convert better than anything we built in-house. The content team gets our voice immediately. Genuinely feels like an extension of our team.",
+    stars: 5,
+  },
+  {
+    name: "Tanvir Ahmed",
+    role: "Founder, Shajgoj",
+    quote:
+      "Import Genius saved us from a nightmare Canton Fair trip. Visa sorted, sourcing done, shipment cleared. We would never go to China without them again.",
+    stars: 5,
+  },
+  {
+    name: "Morshed Alam",
+    role: "COO, Bikroy.com",
+    quote:
+      "The round-robin order distribution is a game-changer. Three couriers, zero manual allocation. Return rate dropped by 22% in the first quarter.",
+    stars: 5,
+  },
+  {
+    name: "Sadia Rahman",
+    role: "Marketing Director, Daraz BD",
+    quote:
+      "Production quality on our product videos is genuinely world-class. Our conversion rate on video-supported listings is 2.4x the site average.",
+    stars: 5,
+  },
+];
+
+export const pricing = {
+  plans: [
+    {
+      name: "Starter",
+      price: { monthly: 4999, annual: 3999 },
+      currency: "৳",
+      desc: "For small ecommerce stores getting started with smarter operations.",
+      features: [
+        "Single store dashboard",
+        "Up to 500 orders/month",
+        "Real-time order streaming",
+        "2 courier integrations",
+        "Basic analytics",
+        "Email support",
+      ],
+      cta: "Get started",
+      highlight: false,
+    },
+    {
+      name: "Growth",
+      price: { monthly: 12999, annual: 10999 },
+      currency: "৳",
+      desc: "For growing brands that need multi-store control and content support.",
+      features: [
+        "Up to 5 stores",
+        "Up to 5,000 orders/month",
+        "Round-robin distribution",
+        "All courier integrations",
+        "Return-ratio engine",
+        "2 landing pages/month",
+        "Content writing (4 pieces)",
+        "Priority support",
+      ],
+      cta: "Start growing",
+      highlight: true,
+      badge: "Most popular",
+    },
+    {
+      name: "Enterprise",
+      price: { monthly: null, annual: null },
+      currency: "৳",
+      desc: "For large operations that need unlimited scale and a dedicated team.",
+      features: [
+        "Unlimited stores",
+        "Unlimited orders",
+        "Multi-tenant SaaS architecture",
+        "Dedicated video production",
+        "Full content strategy",
+        "Custom courier setup",
+        "Dedicated account manager",
+        "SLA guarantee",
+      ],
+      cta: "Book a call",
+      highlight: false,
+    },
+  ],
+};
 
 export const faq = [
   {

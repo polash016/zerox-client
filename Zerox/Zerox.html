@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Zerox — eCommerce Growth Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Bricolage Grotesque', 'sans-serif'],
+        body: ['Plus Jakarta Sans', 'sans-serif'],
+      },
+      colors: {
+        sky: { brand: '#87CEEB', dim: 'rgba(135,206,235,0.12)', glow: 'rgba(135,206,235,0.28)' },
+        ink: { DEFAULT: '#0A0A0A', 2: '#2D2D2D', 3: '#4A5568', 4: '#8896A5', 5: '#C4CDD6' },
+        paper: { DEFAULT: '#FAFAFA', white: '#FFFFFF', warm: '#FDFBF7' },
+        rule: '#EEEEEE',
+      },
+      animation: {
+        'fade-up': 'fadeUp 0.6s ease both',
+        'blob': 'blob 14s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'ticker': 'ticker 22s linear infinite',
+      },
+      keyframes: {
+        fadeUp: { from: { opacity: '0', transform: 'translateY(24px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        blob: {
+          '0%,100%': { borderRadius: '60% 40% 54% 46%/48% 56% 44% 52%', transform: 'translate(0,0) scale(1)' },
+          '50%': { borderRadius: '45% 55% 40% 60%/60% 40% 58% 42%', transform: 'translate(16px,-18px) scale(1.04)' },
+        },
+        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+        ticker: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+      },
+    }
+  }
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: #FAFAFA; color: #0A0A0A; overflow-x: hidden; }
+  h1,h2,h3,h4 { font-family: 'Bricolage Grotesque', sans-serif; }
+  ::selection { background: rgba(135,206,235,0.28); }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #FAFAFA; }
+  ::-webkit-scrollbar-thumb { background: #C4CDD6; border-radius: 4px; }
+
+  .fade-section { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-section.visible { opacity: 1; transform: none; }
+  .fade-section.d1 { transition-delay: 0.08s; }
+  .fade-section.d2 { transition-delay: 0.16s; }
+  .fade-section.d3 { transition-delay: 0.24s; }
+  .fade-section.d4 { transition-delay: 0.32s; }
+
+  /* Hero headline word reveal */
+  .word { display: inline-block; opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .word.show { opacity: 1; transform: none; }
+
+  /* Sky underline */
+  .sky-underline { position: relative; display: inline; }
+  .sky-underline::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0; height: 3px;
+    background: #87CEEB; border-radius: 2px; opacity: 0.7;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 1s cubic-bezier(.4,0,.2,1) 0.8s;
+  }
+  .sky-underline.drawn::after { transform: scaleX(1); }
+
+  /* Card hover */
+  .service-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(135,206,235,0.18); border-color: rgba(135,206,235,0.45) !important; }
+
+  .import-row { transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease; }
+  .import-row:hover { transform: translateX(6px); background: #fff !important; border-color: rgba(135,206,235,0.3) !important; }
+
+  .why-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .why-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(135,206,235,0.12); }
+
+  .bento-tile { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .bento-tile:hover { transform: scale(1.015); box-shadow: 0 10px 36px rgba(135,206,235,0.12); border-color: rgba(135,206,235,0.35) !important; }
+
+  /* Tweaks */
+  #tweak-panel { display: none; position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 20px; width: 232px; box-shadow: 0 16px 48px rgba(0,0,0,0.10); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; }
+  #tweak-panel.open { display: block; }
+  #tweak-panel h4 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; margin-bottom: 16px; color: #0A0A0A; }
+  .tr { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+  .tr label { color: #4A5568; font-size: 12px; }
+  .tr input[type=color] { width: 100%; height: 30px; border: 1px solid #eee; border-radius: 6px; cursor: pointer; padding: 2px; }
+  .tr select { background: #fafafa; color: #0A0A0A; border: 1px solid #eee; border-radius: 6px; padding: 6px 8px; font-size: 12px; width: 100%; }
+  .tr input[type=range] { width: 100%; accent-color: #87CEEB; }
+  .ttog { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .ttog label { color: #4A5568; font-size: 12px; }
+  .ttog input { accent-color: #87CEEB; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none !important; }
+    .hamburger { display: flex !important; }
+    .bento-grid { grid-template-columns: 1fr !important; }
+    .bento-grid > div { grid-column: span 1 !important; }
+    .import-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .footer-cols { grid-template-columns: 1fr 1fr !important; }
+    .hero-floats { display: none !important; }
+  }
+  @media (max-width: 480px) {
+    .footer-cols { grid-template-columns: 1fr !important; }
+    .stats-row { flex-direction: column; gap: 20px !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="tweak-panel">
+  <h4>Tweaks</h4>
+  <div class="tr"><label>Accent color</label><input type="color" id="tw-accent" value="#87CEEB"/></div>
+  <div class="tr"><label>Hero size</label><input type="range" id="tw-hs" min="40" max="88" value="68"/></div>
+  <div class="tr"><label>Card radius</label><input type="range" id="tw-cr" min="4" max="24" value="12"/></div>
+  <div class="tr"><label>Nav style</label><select id="tw-nav"><option value="glass">Glass blur</option><option value="solid">Solid white</option><option value="minimal">Minimal</option></select></div>
+  <div class="ttog"><label>Show hero floats</label><input type="checkbox" id="tw-fl" checked/></div>
+</div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#87CEEB",
+  "heroSize": 68,
+  "cardRadius": 12,
+  "navStyle": "glass",
+  "floats": true
+}/*EDITMODE-END*/;
+
+// ── Lucide icon wrapper
+const LI = ({ name, size = 18, color = 'currentColor', strokeWidth = 1.6 }) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (ref.current && window.lucide) {
+      ref.current.innerHTML = '';
+      const el = document.createElement('i');
+      el.setAttribute('data-lucide', name);
+      ref.current.appendChild(el);
+      lucide.createIcons({ elements: [el] });
+      const svg = ref.current.querySelector('svg');
+      if (svg) { svg.setAttribute('width', size); svg.setAttribute('height', size); svg.setAttribute('stroke', color); svg.setAttribute('stroke-width', strokeWidth); }
+    }
+  }, [name, size, color]);
+  return <span ref={ref} style={{ display: 'inline-flex', alignItems: 'center' }} />;
+};
+
+// ── SCROLL FADE
+function useFade() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-section').forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+}
+
+// ── NAVBAR
+function Navbar({ t, menuOpen, setMenuOpen }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 48);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  const bg = scrolled ? (t.navStyle === 'solid' ? '#fff' : t.navStyle === 'minimal' ? 'transparent' : 'rgba(250,250,250,0.85)') : 'transparent';
+  const bd = scrolled ? '1px solid #EEEEEE' : 'none';
+  const bf = scrolled && t.navStyle === 'glass' ? 'blur(18px) saturate(160%)' : 'none';
+  const links = ['Services','Platform','Import Genius','Why Us','Pricing','Contact'];
+  return (
+    <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, height:64, padding:'0 clamp(20px,5vw,80px)', display:'flex', alignItems:'center', justifyContent:'space-between', background:bg, backdropFilter:bf, borderBottom:bd, transition:'all 0.4s ease' }}>
+      {/* Logo */}
+      <a href="#hero" style={{ textDecoration:'none', display:'flex', alignItems:'center', gap:8 }}>
+        <span style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:20, color:'#0A0A0A', letterSpacing:'-0.02em' }}>Zerox</span>
+        <div style={{ width:7, height:7, borderRadius:'50%', background:t.accent, flexShrink:0, marginTop:1 }}/>
+      </a>
+      {/* Desktop */}
+      <div className="nav-links" style={{ display:'flex', alignItems:'center', gap:28 }}>
+        {links.map(l => (
+          <a key={l} href={`#${l.toLowerCase().replace(' ','-')}`}
+            style={{ color:'#4A5568', fontSize:14, textDecoration:'none', fontWeight:500, transition:'color 0.2s' }}
+            onMouseEnter={e=>e.target.style.color='#0A0A0A'}
+            onMouseLeave={e=>e.target.style.color='#4A5568'}>{l}</a>
+        ))}
+        <a href="#contact" style={{ background:'#0A0A0A', color:'#fff', padding:'9px 20px', borderRadius:8, fontSize:13, fontWeight:600, textDecoration:'none', transition:'opacity 0.2s, transform 0.2s', letterSpacing:'-0.01em' }}
+          onMouseEnter={e=>{e.currentTarget.style.opacity='0.82';e.currentTarget.style.transform='translateY(-1px)';}}
+          onMouseLeave={e=>{e.currentTarget.style.opacity='1';e.currentTarget.style.transform='none';}}>Book a Call</a>
+      </div>
+      {/* Hamburger */}
+      <button onClick={()=>setMenuOpen(!menuOpen)} className="hamburger" style={{ display:'none', background:'none', border:'none', cursor:'pointer', padding:4 }}>
+        <LI name={menuOpen?'x':'menu'} size={22} color="#0A0A0A"/>
+      </button>
+    </nav>
+  );
+}
+
+function MobileMenu({ open, onClose, t }) {
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:99, background:'#fff', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:28, transform:open?'translateX(0)':'translateX(100%)', transition:'transform 0.35s cubic-bezier(.77,0,.18,1)' }}>
+      {['Services','Platform','Import Genius','Why Us','Pricing','Contact'].map(l=>(
+        <a key={l} href={`#${l.toLowerCase().replace(' ','-')}`} onClick={onClose} style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:28, color:'#0A0A0A', textDecoration:'none' }}>{l}</a>
+      ))}
+      <a href="#contact" onClick={onClose} style={{ background:'#0A0A0A', color:'#fff', padding:'13px 34px', borderRadius:10, fontSize:16, fontWeight:600, textDecoration:'none', marginTop:8 }}>Book a Call</a>
+    </div>
+  );
+}
+
+// ── ORDER DASHBOARD MOCK
+function OrderDashboard({ accent }) {
+  const [orders, setOrders] = useState([
+    { id:'#4021', store:'Aarong Lifestyle', amount:'৳ 2,340', status:'New', time:'just now', courier:'Pathao' },
+    { id:'#4020', store:'Meena Bazar Online', amount:'৳ 890', status:'Processing', time:'2m ago', courier:'Steadfast' },
+    { id:'#4019', store:'Shajgoj', amount:'৳ 1,650', status:'Shipped', time:'5m ago', courier:'RedX' },
+    { id:'#4018', store:'Chaldal', amount:'৳ 4,200', status:'Delivered', time:'12m ago', courier:'Pathao' },
+    { id:'#4017', store:'Daraz BD', amount:'৳ 760', status:'Processing', time:'18m ago', courier:'Steadfast' },
+  ]);
+
+  const statusStyle = s => {
+    if (s==='New') return { color:'#1D4ED8', bg:'#EFF6FF', border:'#BFDBFE' };
+    if (s==='Processing') return { color:'#B45309', bg:'#FFFBEB', border:'#FDE68A' };
+    if (s==='Shipped') return { color:'#6D28D9', bg:'#F5F3FF', border:'#DDD6FE' };
+    return { color:'#15803D', bg:'#F0FDF4', border:'#BBF7D0' };
+  };
+
+  // Animate a new order in every 3.5s
+  useEffect(() => {
+    const newOrders = [
+      { id:'#4022', store:'Bikroy.com', amount:'৳ 3,100', status:'New', time:'just now', courier:'RedX' },
+      { id:'#4023', store:'Shajgoj', amount:'৳ 560', status:'New', time:'just now', courier:'Pathao' },
+      { id:'#4024', store:'Aarong Lifestyle', amount:'৳ 1,875', status:'New', time:'just now', courier:'Steadfast' },
+    ];
+    let idx = 0;
+    const interval = setInterval(() => {
+      const next = { ...newOrders[idx % newOrders.length], _new: true };
+      setOrders(prev => [next, ...prev.slice(0, 4)]);
+      idx++;
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const stats = [
+    { label: 'Orders today', value: '247', icon: 'package', delta: '+12%' },
+    { label: 'Revenue', value: '৳ 84K', icon: 'trending-up', delta: '+8%' },
+    { label: 'Active couriers', value: '3', icon: 'truck', delta: '' },
+  ];
+
+  return (
+    /* ── Browser chrome wrapper ── */
+    <div style={{ background:'#fff', borderRadius:16, boxShadow:'0 32px 80px rgba(10,10,10,0.12), 0 2px 8px rgba(10,10,10,0.06)', border:'1px solid #E8ECF2', overflow:'hidden', width:'100%', maxWidth:520 }}>
+      {/* Browser bar */}
+      <div style={{ background:'#F4F5F7', borderBottom:'1px solid #E8ECF2', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+        <div style={{ display:'flex', gap:6 }}>
+          {['#FF5F57','#FEBC2E','#28C840'].map(c=><div key={c} style={{ width:10, height:10, borderRadius:'50%', background:c }}/>)}
+        </div>
+        <div style={{ flex:1, background:'#fff', borderRadius:6, border:'1px solid #E2E6EF', padding:'4px 12px', display:'flex', alignItems:'center', gap:6 }}>
+          <LI name="lock" size={10} color="#8896A5" strokeWidth={2}/>
+          <span style={{ fontSize:11, color:'#8896A5', fontWeight:500 }}>app.zerox.com.bd/orders</span>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:5, background:`${accent}12`, border:`1px solid ${accent}30`, borderRadius:20, padding:'3px 9px' }}>
+          <div style={{ width:6, height:6, borderRadius:'50%', background:'#22C55E', position:'relative' }}>
+            <div style={{ position:'absolute', inset:-2, borderRadius:'50%', background:'#22C55E', opacity:0.4, animation:'ping 1.6s ease-out infinite' }}/>
+          </div>
+          <span style={{ fontSize:10, color:accent, fontWeight:700 }}>LIVE</span>
+        </div>
+      </div>
+
+      {/* Dashboard interior */}
+      <div style={{ background:'#F8F9FC', padding:'0' }}>
+        {/* Sidebar + main layout */}
+        <div style={{ display:'flex', height:360 }}>
+          {/* Mini sidebar */}
+          <div style={{ width:44, background:'#0A0A0A', display:'flex', flexDirection:'column', alignItems:'center', paddingTop:14, gap:14, flexShrink:0 }}>
+            {['layout-grid','package','truck','bar-chart-2','settings'].map((ico,i)=>(
+              <div key={ico} style={{ width:30, height:30, borderRadius:8, background: i===1?`${accent}25`:'transparent', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <LI name={ico} size={14} color={i===1?accent:'rgba(255,255,255,0.3)'} strokeWidth={1.6}/>
+              </div>
+            ))}
+          </div>
+
+          {/* Main content */}
+          <div style={{ flex:1, overflow:'hidden', display:'flex', flexDirection:'column' }}>
+            {/* Top stat strip */}
+            <div style={{ display:'flex', gap:0, borderBottom:'1px solid #EEEEEE', background:'#fff' }}>
+              {stats.map((s,i)=>(
+                <div key={s.label} style={{ flex:1, padding:'10px 14px', borderRight: i<2?'1px solid #EEEEEE':'none' }}>
+                  <div style={{ fontSize:10, color:'#8896A5', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', marginBottom:3 }}>{s.label}</div>
+                  <div style={{ display:'flex', alignItems:'baseline', gap:5 }}>
+                    <span style={{ fontFamily:'Bricolage Grotesque', fontSize:18, fontWeight:800, color:'#0A0A0A', letterSpacing:'-0.03em' }}>{s.value}</span>
+                    {s.delta && <span style={{ fontSize:10, color:'#16A34A', fontWeight:700 }}>{s.delta}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Order table header */}
+            <div style={{ padding:'10px 14px 6px', background:'#fff', borderBottom:'1px solid #F0F1F3' }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                  <span style={{ fontFamily:'Bricolage Grotesque', fontSize:13, fontWeight:700, color:'#0A0A0A' }}>Live Orders</span>
+                  <span style={{ fontSize:10, color:'#8896A5', fontWeight:500 }}>Round-robin active</span>
+                </div>
+                <div style={{ display:'flex', gap:6 }}>
+                  {['Pathao','Steadfast','RedX'].map(c=>(
+                    <span key={c} style={{ fontSize:9, color:'#4A5568', background:'#F0F1F5', borderRadius:4, padding:'2px 6px', fontWeight:600 }}>{c}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Order rows */}
+            <div style={{ flex:1, overflowY:'hidden', background:'#fff' }}>
+              {orders.map((o, i) => {
+                const st = statusStyle(o.status);
+                return (
+                  <div key={o.id+i} style={{
+                    display:'flex', alignItems:'center', gap:8, padding:'7px 14px',
+                    borderBottom:'1px solid #F5F6F8',
+                    background: o._new && i===0 ? `${accent}06` : '#fff',
+                    transition:'background 0.5s ease',
+                    animation: o._new && i===0 ? 'newRow 0.4s ease both' : 'none',
+                  }}>
+                    <div style={{ width:7, height:7, borderRadius:'50%', background: o.status==='New'?accent:'#E2E6EF', flexShrink:0 }}/>
+                    <span style={{ fontFamily:'Bricolage Grotesque', fontSize:11, fontWeight:700, color:'#4A5568', minWidth:38 }}>{o.id}</span>
+                    <span style={{ fontSize:11, color:'#0A0A0A', flex:1, fontWeight:500, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{o.store}</span>
+                    <span style={{ fontSize:11, fontWeight:700, color:'#0A0A0A', minWidth:58, textAlign:'right' }}>{o.amount}</span>
+                    <span style={{ fontSize:9, fontWeight:700, color:st.color, background:st.bg, border:`1px solid ${st.border}`, borderRadius:20, padding:'2px 7px', whiteSpace:'nowrap' }}>{o.status}</span>
+                    <span style={{ fontSize:9, color:'#8896A5', minWidth:48 }}>{o.courier}</span>
+                    <span style={{ fontSize:9, color:'#C4CDD6', minWidth:40, textAlign:'right' }}>{o.time}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Footer strip */}
+            <div style={{ padding:'8px 14px', background:'#F8F9FC', borderTop:'1px solid #EEEEEE', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <span style={{ fontSize:10, color:'#8896A5' }}>Showing 5 of 247 orders</span>
+              <div style={{ display:'flex', alignItems:'center', gap:5 }}>
+                <div style={{ width:5, height:5, borderRadius:'50%', background:accent, animation:'ping 1.8s ease-out infinite', opacity:0.8 }}/>
+                <span style={{ fontSize:10, color:accent, fontWeight:600 }}>Streaming via Socket</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Video placeholder note — replace with <video> or <iframe> */}
+      {/* <video autoPlay muted loop playsInline style={{width:'100%'}} src="your-demo.mp4"/> */}
+    </div>
+  );
+}
+
+// ── HERO
+function Hero({ t }) {
+  const [drawn, setDrawn] = useState(false);
+  const [wordsShown, setWordsShown] = useState(0);
+  const headline = "We don't just support your ecommerce — we guarantee growth";
+  const words = headline.split(' ');
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setWordsShown(i);
+      if (i >= words.length) clearInterval(interval);
+    }, 55);
+    setTimeout(() => setDrawn(true), 900);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section id="hero" style={{ position:'relative', minHeight:'100vh', display:'flex', alignItems:'center', padding:'96px clamp(20px,5vw,72px) 72px', overflow:'hidden', background:'linear-gradient(160deg,#FAFAFA 0%,#F2F5FA 100%)' }}>
+      {/* Grid bg */}
+      <div style={{ position:'absolute', inset:0, backgroundImage:`radial-gradient(circle, rgba(10,15,40,0.04) 1px, transparent 1px)`, backgroundSize:'36px 36px', maskImage:'radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 100%)' }}/>
+
+      {/* Split layout */}
+      <div style={{ position:'relative', zIndex:2, width:'100%', maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(32px,5vw,72px)', alignItems:'center' }} className="hero-split">
+
+        {/* LEFT — content */}
+        <div>
+          {/* Badge */}
+          <div style={{ display:'inline-flex', alignItems:'center', gap:7, background:'#fff', border:'1px solid #EEEEEE', borderRadius:100, padding:'6px 14px', marginBottom:28, boxShadow:'0 2px 12px rgba(10,10,10,0.06)', animation:'fadeUp 0.5s ease both' }}>
+            <div style={{ width:6, height:6, borderRadius:'50%', background:t.accent }}/>
+            <span style={{ fontSize:12, fontWeight:600, color:'#4A5568', letterSpacing:'0.02em' }}>Trusted ecommerce growth partner</span>
+          </div>
+
+          {/* Headline */}
+          <h1 style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:`clamp(30px, ${t.heroSize * 0.038}vw + 14px, ${t.heroSize}px)`, lineHeight:1.07, letterSpacing:'-0.035em', color:'#0A0A0A', marginBottom:22, textWrap:'balance' }}>
+            {words.map((word, i) => {
+              const isGuarantee = word.toLowerCase().startsWith('guarantee');
+              return (
+                <span key={i} className={`word${i < wordsShown ? ' show' : ''}`} style={{ transitionDelay:`${i*50}ms`, marginRight: i < words.length-1 ? '0.24em' : 0 }}>
+                  {isGuarantee
+                    ? <span className={`sky-underline${drawn?' drawn':''}`} style={{ color:t.accent }}>{word}</span>
+                    : word}
+                </span>
+              );
+            })}
+          </h1>
+
+          {/* Subhead */}
+          <p style={{ fontSize:'clamp(14px,1.2vw,17px)', color:'#4A5568', maxWidth:480, lineHeight:1.78, marginBottom:36, fontWeight:300, animation:'fadeUp 0.6s ease 0.5s both' }}>
+            End-to-end support: SaaS platform, video, content, and landing pages built to grow your store — and your profit.
+          </p>
+
+          {/* CTAs */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap', animation:'fadeUp 0.6s ease 0.65s both' }}>
+            <a href="#services" style={{ background:'#0A0A0A', color:'#fff', padding:'13px 28px', borderRadius:10, fontSize:14, fontWeight:600, textDecoration:'none', display:'flex', alignItems:'center', gap:8, letterSpacing:'-0.01em', transition:'transform 0.2s, opacity 0.2s' }}
+              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.opacity='0.85';}}
+              onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.opacity='1';}}>
+              Explore services <LI name="arrow-right" size={14} color="#fff" strokeWidth={2}/>
+            </a>
+            <a href="#contact" style={{ background:'#fff', color:'#0A0A0A', padding:'13px 28px', borderRadius:10, fontSize:14, fontWeight:600, textDecoration:'none', border:'1px solid #EEEEEE', transition:'border-color 0.2s, box-shadow 0.2s', boxShadow:'0 1px 4px rgba(10,10,10,0.05)' }}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=t.accent;e.currentTarget.style.boxShadow=`0 4px 16px ${t.accent}22`;}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor='#EEEEEE';e.currentTarget.style.boxShadow='0 1px 4px rgba(10,10,10,0.05)';}}>
+              Book a free call
+            </a>
+          </div>
+
+          {/* Trust stats */}
+          <div className="stats-row" style={{ display:'flex', gap:28, marginTop:44, paddingTop:28, borderTop:'1px solid #EEEEEE', flexWrap:'wrap', animation:'fadeUp 0.6s ease 0.8s both' }}>
+            {[['50+','Clients'],['Real-time','Tech stack'],['Multi-courier','Integrated'],['99%','Uptime']].map(([v,l])=>(
+              <div key={l}>
+                <div style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:16, color:'#0A0A0A', letterSpacing:'-0.02em' }}>{v}</div>
+                <div style={{ fontSize:11, color:'#8896A5', marginTop:2, fontWeight:500 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT — Order dashboard */}
+        <div style={{ animation:'fadeUp 0.8s ease 0.3s both', position:'relative' }}>
+          {/* Glow behind card */}
+          <div style={{ position:'absolute', top:'10%', left:'5%', right:'5%', bottom:'5%', background:`radial-gradient(ellipse, ${t.accent}20 0%, transparent 70%)`, borderRadius:'50%', filter:'blur(30px)', zIndex:0 }}/>
+          <div style={{ position:'relative', zIndex:1 }}>
+            <OrderDashboard accent={t.accent}/>
+          </div>
+          {/* Small floating badge below card */}
+          <div style={{ position:'absolute', bottom:-16, left:'50%', transform:'translateX(-50%)', background:'#fff', border:'1px solid #EEEEEE', borderRadius:30, padding:'7px 16px', display:'flex', alignItems:'center', gap:8, boxShadow:'0 4px 16px rgba(10,10,10,0.08)', whiteSpace:'nowrap' }}>
+            <div style={{ width:7, height:7, borderRadius:'50%', background:'#22C55E' }}/>
+            <span style={{ fontSize:11, color:'#4A5568', fontWeight:500 }}>Round-robin distribution · 3 couriers active</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── SERVICES
+function Services({ t }) {
+  const cards = [
+    { icon:'layout-dashboard', title:'eCommerce SaaS Platform', desc:'Multi-website control, real-time orders, and smart distribution — all from one dashboard.' },
+    { icon:'video', title:'Video Production', desc:'Full-cycle commercial video: concept, shoot, and delivery that converts browsers to buyers.' },
+    { icon:'film', title:'Video Editing', desc:'Post-production that transforms raw footage into polished, high-converting ecommerce content.' },
+    { icon:'pen-line', title:'Content Writing', desc:'SEO-optimised product copy and long-form content engineered to rank and convert.' },
+    { icon:'panel-top', title:'Landing Page Design', desc:'Conversion-first landing pages — fast, premium, and built to sell.' },
+  ];
+  return (
+    <section id="services" style={{ padding:'clamp(72px,9vw,120px) clamp(20px,5vw,80px)', background:'#fff' }}>
+      <div style={{ maxWidth:1200, margin:'0 auto' }}>
+        {/* Label + headline */}
+        <div className="fade-section" style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:52, flexWrap:'wrap', gap:16, paddingBottom:28, borderBottom:'1px solid #EEEEEE' }}>
+          <div>
+            <div style={{ fontSize:11, fontWeight:700, color:t.accent, textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:12 }}>What We Do</div>
+            <h2 style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(26px,3vw,42px)', letterSpacing:'-0.03em', color:'#0A0A0A', lineHeight:1.1, maxWidth:460 }}>Everything your store needs, under one roof.</h2>
+          </div>
+          <a href="#contact" style={{ fontSize:13, color:'#4A5568', textDecoration:'none', display:'flex', alignItems:'center', gap:6, fontWeight:500, transition:'color 0.2s', whiteSpace:'nowrap' }}
+            onMouseEnter={e=>e.currentTarget.style.color='#0A0A0A'}
+            onMouseLeave={e=>e.currentTarget.style.color='#4A5568'}>
+            Start growing <LI name="arrow-right" size={14} color="currentColor" strokeWidth={2}/>
+          </a>
+        </div>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:16 }}>
+          {cards.map((c,i)=>(
+            <div key={c.title} className={`service-card fade-section d${i%4+1}`} style={{ background:'#FAFAFA', border:'1px solid #EEEEEE', borderRadius:t.cardRadius, padding:'28px 22px', cursor:'default' }}>
+              <div style={{ width:42, height:42, borderRadius:10, background:`${t.accent}15`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:16 }}>
+                <LI name={c.icon} size={18} color={t.accent} strokeWidth={1.8}/>
+              </div>
+              <h3 style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:16, color:'#0A0A0A', marginBottom:8, letterSpacing:'-0.02em', lineHeight:1.25 }}>{c.title}</h3>
+              <p style={{ fontSize:13, color:'#4A5568', lineHeight:1.7, marginBottom:16 }}>{c.desc}</p>
+              <span style={{ fontSize:12, color:t.accent, fontWeight:600, display:'flex', alignItems:'center', gap:4 }}>
+                Learn more <LI name="arrow-right" size={12} color={t.accent} strokeWidth={2.2}/>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── PLATFORM
+function Platform({ t }) {
+  const tiles = [
+    { icon:'layout-grid', title:'Multi-website management', desc:'All your stores. One unified view. No tab chaos.', large:true },
+    { icon:'zap', title:'Real-time order streaming', desc:'Live updates via Socket — no reload, no lag.' },
+    { icon:'shuffle', title:'Round-robin distribution', desc:'Smart order routing across your fulfilment network.' },
+    { icon:'trending-down', title:'Return-ratio engine', desc:'Built-in tools to minimise returns and protect margins.' },
+    { icon:'truck', title:'Multi-courier integration', desc:'Every major courier in Bangladesh — connected.' },
+    { icon:'users', title:'Multi-tenant architecture', desc:'Enterprise SaaS infra built to scale without breaking.' },
+  ];
+  return (
+    <section id="platform" style={{ padding:'clamp(72px,9vw,120px) clamp(20px,5vw,80px)', background:'#FAFAFA' }}>
+      <div style={{ maxWidth:1200, margin:'0 auto' }}>
+        <div className="fade-section" style={{ marginBottom:52, paddingBottom:28, borderBottom:'1px solid #EEEEEE' }}>
+          <div style={{ fontSize:11, fontWeight:700, color:t.accent, textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:12 }}>The Platform</div>
+          <h2 style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(26px,3vw,42px)', letterSpacing:'-0.03em', color:'#0A0A0A', lineHeight:1.1 }}>One dashboard. Total control.</h2>
+        </div>
+        <div className="bento-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14 }}>
+          {tiles.map((tile,i)=>(
+            <div key={tile.title} className={`bento-tile fade-section d${i%3+1}`} style={{ gridColumn: tile.large?'span 2':'span 1', background:'#fff', border:'1px solid #EEEEEE', borderRadius:t.cardRadius, padding: tile.large?'36px 32px':'26px 22px', cursor:'default' }}>
+              <div style={{ width:40, height:40, borderRadius:9, background:`${t.accent}12`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:14 }}>
+                <LI name={tile.icon} size={17} color={t.accent} strokeWidth={1.8}/>
+              </div>
+              <h3 style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize: tile.large?20:15, color:'#0A0A0A', marginBottom:7, letterSpacing:'-0.025em', lineHeight:1.2 }}>{tile.title}</h3>
+              <p style={{ fontSize:13, color:'#4A5568', lineHeight:1.65 }}>{tile.desc}</p>
+              {tile.large && (
+                <div style={{ marginTop:22, background:'#FAFAFA', borderRadius:8, padding:'14px 16px', border:'1px solid #EEEEEE' }}>
+                  {['#1204 · Aarong Lifestyle','#1203 · Meena Bazar Online','#1202 · Shajgoj'].map((row,j)=>(
+                    <div key={j} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'7px 0', borderBottom: j<2?'1px solid #EEEEEE':'none' }}>
+                      <span style={{ fontSize:12, color:'#4A5568', fontWeight:500 }}>{row}</span>
+                      <span style={{ fontSize:11, color:'#16A34A', background:'#F0FDF4', borderRadius:20, padding:'2px 8px', fontWeight:600 }}>New</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── IMPORT GENIUS
+function ImportGenius({ t }) {
+  const svcs = [
+    { icon:'credit-card', label:'China visa processing' },
+    { icon:'map-pin', label:'Canton Fair guided tours' },
+    { icon:'search', label:'Product sourcing' },
+    { icon:'plane', label:'Tickets & stays' },
+    { icon:'package', label:'End-to-end import assistance' },
+  ];
+  return (
+    <section id="import-genius" style={{ padding:'clamp(72px,9vw,120px) clamp(20px,5vw,80px)', background:'#FDFBF7' }}>
+      <div style={{ maxWidth:1200, margin:'0 auto' }}>
+        <div className="import-layout" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:72, alignItems:'start' }}>
+          <div>
+            <div className="fade-section" style={{ fontSize:11, fontWeight:700, color:'#B45309', textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:14 }}>Sister Concern</div>
+            <h2 className="fade-section d1" style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(26px,2.8vw,40px)', letterSpacing:'-0.03em', color:'#0A0A0A', lineHeight:1.1, marginBottom:20 }}>
+              Import Genius —<br/><span style={{ color:'#B45309' }}>your China business partner.</span>
+            </h2>
+            <p className="fade-section d2" style={{ fontSize:15, color:'#4A5568', lineHeight:1.8, marginBottom:32, maxWidth:400 }}>
+              We help Bangladeshi businesses navigate China trade end-to-end — Canton Fair visits, visa processing, product sourcing, logistics, and everything in between.
+            </p>
+            <a href="#contact" className="fade-section d3" style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#92400E', color:'#fff', padding:'12px 24px', borderRadius:9, fontSize:13, fontWeight:600, textDecoration:'none', transition:'opacity 0.2s, transform 0.2s' }}
+              onMouseEnter={e=>{e.currentTarget.style.opacity='0.85';e.currentTarget.style.transform='translateY(-1px)';}}
+              onMouseLeave={e=>{e.currentTarget.style.opacity='1';e.currentTarget.style.transform='none';}}>
+              Explore Import Genius <LI name="arrow-right" size={14} color="#fff" strokeWidth={2}/>
+            </a>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+            {svcs.map((s,i)=>(
+              <div key={s.label} className={`import-row fade-section d${i%4+1}`} style={{ display:'flex', alignItems:'center', gap:14, background:'#fff', border:'1px solid rgba(180,83,9,0.12)', borderRadius:t.cardRadius, padding:'15px 18px', cursor:'default' }}>
+                <div style={{ width:36, height:36, borderRadius:8, background:'rgba(180,83,9,0.08)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                  <LI name={s.icon} size={15} color="#B45309" strokeWidth={1.8}/>
+                </div>
+                <span style={{ fontSize:14, color:'#2D2D2D', fontWeight:500 }}>{s.label}</span>
+                <div style={{ marginLeft:'auto', opacity:0.4 }}><LI name="arrow-right" size={14} color="#4A5568" strokeWidth={2}/></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── WHY ZEROX
+function WhyZerox({ t }) {
+  const items = [
+    { n:'01', icon:'dollar-sign', title:'Profit-first approach', desc:'We only win when you win. Our model is built around your revenue growth — no retainers, no fluff, no vanity metrics.' },
+    { n:'02', icon:'layers', title:'End-to-end support', desc:'From product sourcing to last-mile delivery, we own every step of the growth journey alongside you.' },
+    { n:'03', icon:'activity', title:'Built for scale', desc:'Real-time Socket architecture, multi-tenant infrastructure, and systems that handle 100 or 10,000 orders without breaking.' },
+  ];
+  return (
+    <section id="why-us" style={{ padding:'clamp(72px,9vw,120px) clamp(20px,5vw,80px)', background:'#fff' }}>
+      <div style={{ maxWidth:1200, margin:'0 auto' }}>
+        <div className="fade-section" style={{ marginBottom:52, paddingBottom:28, borderBottom:'1px solid #EEEEEE', display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:16 }}>
+          <div>
+            <div style={{ fontSize:11, fontWeight:700, color:t.accent, textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:12 }}>Why Zerox</div>
+            <h2 style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(26px,3vw,42px)', letterSpacing:'-0.03em', color:'#0A0A0A', lineHeight:1.1 }}>Why teams choose Zerox.</h2>
+          </div>
+        </div>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:18 }}>
+          {items.map((item,i)=>(
+            <div key={item.n} className={`why-card fade-section d${i+1}`} style={{ background:'#FAFAFA', border:'1px solid #EEEEEE', borderRadius:t.cardRadius, padding:'32px 26px', cursor:'default', position:'relative', overflow:'hidden' }}>
+              <div style={{ position:'absolute', top:16, right:20, fontFamily:'Bricolage Grotesque', fontSize:56, fontWeight:800, color:'rgba(10,10,10,0.035)', lineHeight:1 }}>{item.n}</div>
+              <div style={{ width:46, height:46, borderRadius:11, background:`${t.accent}14`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:20 }}>
+                <LI name={item.icon} size={20} color={t.accent} strokeWidth={1.8}/>
+              </div>
+              <h3 style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:19, color:'#0A0A0A', marginBottom:10, letterSpacing:'-0.025em', lineHeight:1.2 }}>{item.title}</h3>
+              <p style={{ fontSize:14, color:'#4A5568', lineHeight:1.75 }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── TESTIMONIALS
+function Testimonials({ t }) {
+  const reviews = [
+    { name:'Rafiul Islam', role:'CEO, Aarong Lifestyle', quote:'Zerox transformed how we manage orders across 4 stores. Real-time streaming means our team never misses a beat — revenue up 38% in 3 months.', stars:5 },
+    { name:'Nadia Hossain', role:'Head of Growth, Chaldal', quote:'Their landing pages convert better than anything we built in-house. The content team gets our voice immediately. Genuinely feels like an extension of our team.', stars:5 },
+    { name:'Tanvir Ahmed', role:'Founder, Shajgoj', quote:'Import Genius saved us from a nightmare Canton Fair trip. Visa sorted, sourcing done, shipment cleared. We would never go to China without them again.', stars:5 },
+    { name:'Morshed Alam', role:'COO, Bikroy.com', quote:'The round-robin order distribution is a game-changer. Three couriers, zero manual allocation. Return rate dropped by 22% in the first quarter.', stars:5 },
+    { name:'Sadia Rahman', role:'Marketing Director, Daraz BD', quote:'Production quality on our product videos is genuinely world-class. Our conversion rate on video-supported listings is 2.4x the site average.', stars:5 },
+  ];
+
+  const [active, setActive] = useState(0);
+  // Auto-advance
+  useEffect(() => {
+    const t = setInterval(() => setActive(a => (a+1) % reviews.length), 4500);
+    return () => clearInterval(t);
+  }, []);
+
+  const Stars = ({ n }) => (
+    <div style={{ display:'flex', gap:3, marginBottom:16 }}>
+      {Array.from({length:n}).map((_,i) => (
+        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      ))}
+    </div>
+  );
+
+  return (
+    <section id="testimonials" style={{ padding:'clamp(72px,9vw,120px) clamp(20px,5vw,80px)', background:'#0A0A0A', position:'relative', overflow:'hidden' }}>
+      {/* Subtle glow */}
+      <div style={{ position:'absolute', top:'30%', left:'50%', transform:'translateX(-50%)', width:600, height:300, borderRadius:'50%', background:`radial-gradient(ellipse, ${t.accent}10 0%, transparent 70%)`, pointerEvents:'none' }}/>
+
+      <div style={{ maxWidth:1200, margin:'0 auto', position:'relative' }}>
+        {/* Header */}
+        <div className="fade-section" style={{ marginBottom:56, paddingBottom:28, borderBottom:'1px solid rgba(255,255,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:16 }}>
+          <div>
+            <div style={{ fontSize:11, fontWeight:700, color:t.accent, textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:12 }}>Client Stories</div>
+            <h2 style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(26px,3vw,42px)', letterSpacing:'-0.03em', color:'#fff', lineHeight:1.1 }}>What our clients say.</h2>
+          </div>
+          {/* Dots nav */}
+          <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+            {reviews.map((_,i) => (
+              <button key={i} onClick={() => setActive(i)} style={{ width: i===active?24:8, height:8, borderRadius:4, background: i===active?t.accent:'rgba(255,255,255,0.2)', border:'none', cursor:'pointer', transition:'all 0.3s ease', padding:0 }}/>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured quote */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'start' }} className="testimonial-grid">
+          {/* Big active card */}
+          <div className="fade-section" style={{ background:'rgba(255,255,255,0.04)', border:`1px solid ${t.accent}25`, borderRadius:t.cardRadius+4, padding:'40px 36px', position:'relative', overflow:'hidden' }}>
+            <div style={{ position:'absolute', top:-20, right:-20, fontFamily:'Bricolage Grotesque', fontSize:140, fontWeight:800, color:'rgba(255,255,255,0.03)', lineHeight:1, pointerEvents:'none' }}>"</div>
+            <Stars n={reviews[active].stars}/>
+            <p style={{ fontSize:'clamp(15px,1.5vw,19px)', color:'rgba(255,255,255,0.85)', lineHeight:1.75, fontWeight:300, marginBottom:28, fontStyle:'italic' }}>
+              "{reviews[active].quote}"
+            </p>
+            <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+              <div style={{ width:42, height:42, borderRadius:'50%', background:`${t.accent}20`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <span style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:16, color:t.accent }}>{reviews[active].name[0]}</span>
+              </div>
+              <div>
+                <div style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:15, color:'#fff' }}>{reviews[active].name}</div>
+                <div style={{ fontSize:12, color:'rgba(255,255,255,0.4)', marginTop:2 }}>{reviews[active].role}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Side stack — other cards */}
+          <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+            {reviews.filter((_,i) => i !== active).slice(0,3).map((r,i) => (
+              <div key={r.name} className={`fade-section d${i+1}`}
+                onClick={() => setActive(reviews.indexOf(r))}
+                style={{ background:'rgba(255,255,255,0.025)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:t.cardRadius, padding:'18px 20px', cursor:'pointer', transition:'all 0.25s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.background='rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor=`${t.accent}20`; }}
+                onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.025)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.07)'; }}>
+                <p style={{ fontSize:13, color:'rgba(255,255,255,0.55)', lineHeight:1.65, marginBottom:12, fontStyle:'italic', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>"{r.quote}"</p>
+                <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+                  <div style={{ width:28, height:28, borderRadius:'50%', background:'rgba(255,255,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                    <span style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:11, color:'rgba(255,255,255,0.6)' }}>{r.name[0]}</span>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily:'Bricolage Grotesque', fontWeight:600, fontSize:12, color:'rgba(255,255,255,0.7)' }}>{r.name}</div>
+                    <div style={{ fontSize:11, color:'rgba(255,255,255,0.3)' }}>{r.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── PRICING
+function Pricing({ t }) {
+  const [annual, setAnnual] = useState(false);
+
+  const plans = [
+    {
+      name: 'Starter',
+      price: { monthly: 4999, annual: 3999 },
+      currency: '৳',
+      desc: 'For small ecommerce stores getting started with smarter operations.',
+      features: [
+        'Single store dashboard',
+        'Up to 500 orders/month',
+        'Real-time order streaming',
+        '2 courier integrations',
+        'Basic analytics',
+        'Email support',
+      ],
+      cta: 'Get started',
+      highlight: false,
+    },
+    {
+      name: 'Growth',
+      price: { monthly: 12999, annual: 10999 },
+      currency: '৳',
+      desc: 'For growing brands that need multi-store control and content support.',
+      features: [
+        'Up to 5 stores',
+        'Up to 5,000 orders/month',
+        'Round-robin distribution',
+        'All courier integrations',
+        'Return-ratio engine',
+        '2 landing pages/month',
+        'Content writing (4 pieces)',
+        'Priority support',
+      ],
+      cta: 'Start growing',
+      highlight: true,
+      badge: 'Most popular',
+    },
+    {
+      name: 'Enterprise',
+      price: { monthly: null, annual: null },
+      currency: '৳',
+      desc: 'For large operations that need unlimited scale and a dedicated team.',
+      features: [
+        'Unlimited stores',
+        'Unlimited orders',
+        'Multi-tenant SaaS architecture',
+        'Dedicated video production',
+        'Full content strategy',
+        'Custom courier setup',
+        'Dedicated account manager',
+        'SLA guarantee',
+      ],
+      cta: 'Book a call',
+      highlight: false,
+    },
+  ];
+
+  return (
+    <section id="pricing" style={{ padding:'clamp(72px,9vw,120px) clamp(20px,5vw,80px)', background:'#FAFAFA' }}>
+      <div style={{ maxWidth:1200, margin:'0 auto' }}>
+        {/* Header */}
+        <div className="fade-section" style={{ marginBottom:52, paddingBottom:28, borderBottom:'1px solid #EEEEEE', display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:16 }}>
+          <div>
+            <div style={{ fontSize:11, fontWeight:700, color:t.accent, textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:12 }}>Pricing</div>
+            <h2 style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(26px,3vw,42px)', letterSpacing:'-0.03em', color:'#0A0A0A', lineHeight:1.1 }}>Simple, transparent pricing.</h2>
+          </div>
+          {/* Toggle */}
+          <div style={{ display:'flex', alignItems:'center', gap:10, background:'#fff', border:'1px solid #EEEEEE', borderRadius:30, padding:'6px 8px' }}>
+            <button onClick={()=>setAnnual(false)} style={{ padding:'6px 16px', borderRadius:22, border:'none', cursor:'pointer', fontFamily:'Plus Jakarta Sans', fontSize:13, fontWeight:600, transition:'all 0.2s', background:!annual?'#0A0A0A':'transparent', color:!annual?'#fff':'#4A5568' }}>Monthly</button>
+            <button onClick={()=>setAnnual(true)} style={{ padding:'6px 16px', borderRadius:22, border:'none', cursor:'pointer', fontFamily:'Plus Jakarta Sans', fontSize:13, fontWeight:600, transition:'all 0.2s', background:annual?'#0A0A0A':'transparent', color:annual?'#fff':'#4A5568', display:'flex', alignItems:'center', gap:6 }}>
+              Annual
+              <span style={{ fontSize:10, background:`${t.accent}20`, color:t.accent, borderRadius:10, padding:'1px 7px', fontWeight:700 }}>-20%</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Cards */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:18 }}>
+          {plans.map((plan, i) => (
+            <div key={plan.name} className={`fade-section d${i+1}`} style={{
+              background: plan.highlight ? '#0A0A0A' : '#fff',
+              border: `1px solid ${plan.highlight ? '#0A0A0A' : '#EEEEEE'}`,
+              borderRadius: t.cardRadius+2,
+              padding:'32px 28px',
+              position:'relative',
+              display:'flex', flexDirection:'column',
+              boxShadow: plan.highlight ? '0 24px 60px rgba(10,10,10,0.15)' : '0 1px 4px rgba(10,10,10,0.05)',
+              transition:'transform 0.3s, box-shadow 0.3s',
+            }}
+              onMouseEnter={e=>{ if(!plan.highlight){ e.currentTarget.style.transform='translateY(-4px)'; e.currentTarget.style.boxShadow=`0 16px 40px ${t.accent}15`; e.currentTarget.style.borderColor=`${t.accent}35`; }}}
+              onMouseLeave={e=>{ if(!plan.highlight){ e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 1px 4px rgba(10,10,10,0.05)'; e.currentTarget.style.borderColor='#EEEEEE'; }}}>
+              {plan.badge && (
+                <div style={{ position:'absolute', top:-12, left:'50%', transform:'translateX(-50%)', background:t.accent, borderRadius:20, padding:'4px 14px', fontSize:11, fontWeight:700, color:'#0A0A0A', whiteSpace:'nowrap' }}>{plan.badge}</div>
+              )}
+              <div style={{ marginBottom:24 }}>
+                <div style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:13, color: plan.highlight?'rgba(255,255,255,0.5)':'#8896A5', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:8 }}>{plan.name}</div>
+                {plan.price.monthly !== null ? (
+                  <div style={{ display:'flex', alignItems:'baseline', gap:4, marginBottom:6 }}>
+                    <span style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:38, color: plan.highlight?'#fff':'#0A0A0A', letterSpacing:'-0.04em', lineHeight:1 }}>
+                      {plan.currency}{(annual ? plan.price.annual : plan.price.monthly).toLocaleString()}
+                    </span>
+                    <span style={{ fontSize:13, color: plan.highlight?'rgba(255,255,255,0.4)':'#8896A5', fontWeight:400 }}>/mo</span>
+                  </div>
+                ) : (
+                  <div style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:32, color: plan.highlight?'#fff':'#0A0A0A', letterSpacing:'-0.03em', lineHeight:1, marginBottom:6 }}>Custom</div>
+                )}
+                <p style={{ fontSize:13, color: plan.highlight?'rgba(255,255,255,0.5)':'#4A5568', lineHeight:1.6 }}>{plan.desc}</p>
+              </div>
+
+              <div style={{ flex:1, marginBottom:28 }}>
+                <div style={{ fontSize:11, fontWeight:700, color: plan.highlight?'rgba(255,255,255,0.3)':'#8896A5', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:12 }}>What's included</div>
+                {plan.features.map(f => (
+                  <div key={f} style={{ display:'flex', alignItems:'flex-start', gap:9, marginBottom:10 }}>
+                    <div style={{ width:16, height:16, borderRadius:'50%', background: plan.highlight?`${t.accent}20`:`${t.accent}15`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginTop:1 }}>
+                      <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6l3 3 5-5" stroke={t.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <span style={{ fontSize:13, color: plan.highlight?'rgba(255,255,255,0.75)':'#4A5568', lineHeight:1.5 }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+
+              <a href="#contact" style={{
+                display:'block', textAlign:'center',
+                background: plan.highlight ? t.accent : '#0A0A0A',
+                color: plan.highlight ? '#0A0A0A' : '#fff',
+                padding:'13px 24px', borderRadius:9, fontSize:14, fontWeight:600,
+                textDecoration:'none', transition:'opacity 0.2s, transform 0.2s',
+                letterSpacing:'-0.01em',
+              }}
+                onMouseEnter={e=>{e.currentTarget.style.opacity='0.85';e.currentTarget.style.transform='translateY(-1px)';}}
+                onMouseLeave={e=>{e.currentTarget.style.opacity='1';e.currentTarget.style.transform='none';}}>
+                {plan.cta} →
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* Footnote */}
+        <p className="fade-section" style={{ textAlign:'center', fontSize:13, color:'#8896A5', marginTop:28 }}>
+          All prices in BDT. Annual plans billed yearly. <a href="#contact" style={{ color:t.accent, textDecoration:'none', fontWeight:600 }}>Contact us</a> for custom terms.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ── TICKER
+function Ticker({ accent }) {
+  const items = ['eCommerce Growth','SaaS Platform','Video Production','Content Writing','Landing Pages','Import Genius','Order Management','Multi-Courier','Real-time Tech'];
+  const doubled = [...items,...items];
+  return (
+    <div style={{ borderTop:'1px solid #EEEEEE', borderBottom:'1px solid #EEEEEE', padding:'12px 0', overflow:'hidden', background:`${accent}08` }}>
+      <div style={{ display:'flex', whiteSpace:'nowrap', animation:'ticker 24s linear infinite' }}>
+        {doubled.map((item,i)=>(
+          <span key={i} style={{ display:'inline-flex', alignItems:'center', gap:18, paddingRight:52, fontSize:11, fontWeight:700, color:accent, letterSpacing:'0.1em', textTransform:'uppercase' }}>
+            <span style={{ width:4, height:4, borderRadius:'50%', background:accent, flexShrink:0 }}/>
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── CTA + FOOTER
+function CtaFooter({ t }) {
+  const [email, setEmail] = useState('');
+  const [done, setDone] = useState(false);
+  return (
+    <>
+      <Ticker accent={t.accent}/>
+      {/* CTA */}
+      <section id="contact" style={{ padding:'clamp(80px,10vw,130px) clamp(20px,5vw,80px)', background:`${t.accent}0C`, position:'relative', overflow:'hidden' }}>
+        <div style={{ position:'absolute', inset:0, backgroundImage:`radial-gradient(circle, rgba(10,15,40,0.03) 1px, transparent 1px)`, backgroundSize:'36px 36px' }}/>
+        <div style={{ maxWidth:640, margin:'0 auto', textAlign:'center', position:'relative' }}>
+          <div className="fade-section" style={{ display:'inline-flex', alignItems:'center', gap:7, background:'#fff', border:'1px solid #EEEEEE', borderRadius:100, padding:'6px 14px', marginBottom:22, boxShadow:'0 2px 10px rgba(10,10,10,0.06)' }}>
+            <div style={{ width:6, height:6, borderRadius:'50%', background:'#22C55E' }}/>
+            <span style={{ fontSize:12, color:'#4A5568', fontWeight:500 }}>Limited onboarding spots — Q2 2026</span>
+          </div>
+          <h2 className="fade-section d1" style={{ fontFamily:'Bricolage Grotesque', fontWeight:800, fontSize:'clamp(28px,4.5vw,56px)', letterSpacing:'-0.035em', color:'#0A0A0A', lineHeight:1.06, marginBottom:16 }}>
+            Ready to scale your ecommerce?
+          </h2>
+          <p className="fade-section d2" style={{ fontSize:16, color:'#4A5568', marginBottom:36, lineHeight:1.7, fontWeight:300 }}>
+            Book a free 30-minute strategy call. Honest analysis, no pitch decks.
+          </p>
+          {!done ? (
+            <form className="fade-section d3" onSubmit={e=>{e.preventDefault();if(email)setDone(true);}} style={{ display:'flex', gap:10, justifyContent:'center', flexWrap:'wrap' }}>
+              <input type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)} required style={{ background:'#fff', border:'1px solid #EEEEEE', borderRadius:9, padding:'13px 18px', fontSize:14, color:'#0A0A0A', outline:'none', width:260, fontFamily:'Plus Jakarta Sans', transition:'border-color 0.2s, box-shadow 0.2s', boxShadow:'0 1px 4px rgba(10,10,10,0.05)' }}
+                onFocus={e=>{e.target.style.borderColor=t.accent;e.target.style.boxShadow=`0 0 0 3px ${t.accent}20`;}}
+                onBlur={e=>{e.target.style.borderColor='#EEEEEE';e.target.style.boxShadow='0 1px 4px rgba(10,10,10,0.05)';}}
+              />
+              <button type="submit" style={{ background:'#0A0A0A', color:'#fff', border:'none', borderRadius:9, padding:'13px 26px', fontSize:14, fontWeight:600, cursor:'pointer', fontFamily:'Plus Jakarta Sans', transition:'opacity 0.2s' }}
+                onMouseEnter={e=>e.currentTarget.style.opacity='0.82'}
+                onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
+                Book free strategy call →
+              </button>
+            </form>
+          ) : (
+            <div style={{ background:'#fff', border:`1px solid ${t.accent}30`, borderRadius:12, padding:'16px 28px', display:'inline-flex', alignItems:'center', gap:10, boxShadow:`0 4px 16px ${t.accent}10` }}>
+              <div style={{ width:22, height:22, borderRadius:'50%', background:t.accent, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <LI name="check" size={12} color="#fff" strokeWidth={2.5}/>
+              </div>
+              <span style={{ color:'#0A0A0A', fontWeight:500, fontSize:14 }}>We'll reach out within 24 hours.</span>
+            </div>
+          )}
+          <p className="fade-section d4" style={{ fontSize:12, color:'#8896A5', marginTop:16 }}>No commitment · 30-minute call · Free audit included</p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ background:'#0A0A0A', padding:'clamp(40px,6vw,68px) clamp(20px,5vw,80px) 28px' }}>
+        <div style={{ maxWidth:1200, margin:'0 auto' }}>
+          <div className="footer-cols" style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gap:40, marginBottom:48 }}>
+            <div>
+              <div style={{ display:'flex', alignItems:'center', gap:7, marginBottom:14 }}>
+                <span style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:18, color:'#fff' }}>Zerox</span>
+                <div style={{ width:6, height:6, borderRadius:'50%', background:t.accent, marginTop:1 }}/>
+              </div>
+              <p style={{ fontSize:13, color:'rgba(255,255,255,0.3)', lineHeight:1.8, maxWidth:260 }}>Bangladesh's end-to-end ecommerce growth partner — technology, content, and operations in one.</p>
+              <div style={{ display:'flex', gap:10, marginTop:20 }}>
+                {[
+                  { icon:'x', label:'X' },
+                  { icon:'globe', label:'LinkedIn' },
+                  { icon:'message-circle', label:'Facebook' },
+                ].map(s=>(
+                  <a key={s.icon} href="#" title={s.label} style={{ width:32, height:32, borderRadius:7, background:'rgba(255,255,255,0.07)', display:'flex', alignItems:'center', justifyContent:'center', transition:'background 0.2s' }}
+                    onMouseEnter={e=>e.currentTarget.style.background=`${t.accent}25`}
+                    onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.07)'}>
+                    <LI name={s.icon} size={13} color="rgba(255,255,255,0.45)" strokeWidth={1.8}/>
+                  </a>
+                ))}
+              </div>
+            </div>
+            {[
+              ['Services',['SaaS Platform','Video Production','Video Editing','Content Writing','Landing Pages']],
+              ['Company',['About','Import Genius','Why Us','Contact']],
+            ].map(([title,links])=>(
+              <div key={title}>
+                <h4 style={{ fontFamily:'Bricolage Grotesque', fontWeight:700, fontSize:11, color:'rgba(255,255,255,0.3)', marginBottom:14, textTransform:'uppercase', letterSpacing:'0.1em' }}>{title}</h4>
+                <div style={{ display:'flex', flexDirection:'column', gap:9 }}>
+                  {links.map(l=>(
+                    <a key={l} href="#" style={{ fontSize:13, color:'rgba(255,255,255,0.4)', textDecoration:'none', transition:'color 0.2s' }}
+                      onMouseEnter={e=>e.target.style.color='#fff'}
+                      onMouseLeave={e=>e.target.style.color='rgba(255,255,255,0.4)'}>{l}</a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ borderTop:'1px solid rgba(255,255,255,0.07)', paddingTop:22, display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:10 }}>
+            <span style={{ fontSize:12, color:'rgba(255,255,255,0.2)' }}>© 2026 Zerox · Dhaka, Bangladesh</span>
+            <div style={{ display:'flex', gap:16 }}>
+              {['Privacy','Terms'].map(l=>(
+                <a key={l} href="#" style={{ fontSize:12, color:'rgba(255,255,255,0.2)', textDecoration:'none', transition:'color 0.2s' }}
+                  onMouseEnter={e=>e.target.style.color='rgba(255,255,255,0.5)'}
+                  onMouseLeave={e=>e.target.style.color='rgba(255,255,255,0.2)'}>{l}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+// ── APP
+function App() {
+  const [t, setT] = useState(TWEAK_DEFAULTS);
+  const [menuOpen, setMenuOpen] = useState(false);
+  useFade();
+
+  useEffect(() => {
+    const panel = document.getElementById('tweak-panel');
+    const handler = e => {
+      if (e.data?.type==='__activate_edit_mode') panel.classList.add('open');
+      if (e.data?.type==='__deactivate_edit_mode') panel.classList.remove('open');
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({type:'__edit_mode_available'},'*');
+
+    const wire = (id, key, parse) => {
+      const el = document.getElementById(id); if (!el) return;
+      el.value = t[key]; if (el.type==='checkbox') el.checked = t[key];
+      el.addEventListener(el.type==='range'||el.type==='color'?'input':'change', e=>{
+        const v = parse ? parse(e.target.value) : (el.type==='checkbox'?e.target.checked:e.target.value);
+        setT(prev=>({...prev,[key]:v}));
+        window.parent.postMessage({type:'__edit_mode_set_keys',edits:{[key]:v}},'*');
+      });
+    };
+    wire('tw-accent','accent',null);
+    wire('tw-hs','heroSize',Number);
+    wire('tw-cr','cardRadius',Number);
+    wire('tw-nav','navStyle',null);
+    wire('tw-fl','floats',null);
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  // Reinit Lucide after render
+  useEffect(() => { if (window.lucide) lucide.createIcons(); });
+
+  return (
+    <>
+      <style>{`
+        @keyframes ping { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(2.2);opacity:0} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes blob { 0%,100%{border-radius:60% 40% 54% 46%/48% 56% 44% 52%;transform:translate(0,0) scale(1)} 50%{border-radius:45% 55% 40% 60%/60% 40% 58% 42%;transform:translate(16px,-18px) scale(1.04)} }
+        @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        @keyframes newRow { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:none} }
+        @media (max-width: 960px) { .hero-split { grid-template-columns: 1fr !important; } }
+        @media (max-width: 768px) {
+          .nav-links { display: none !important; }
+          .hamburger { display: flex !important; }
+          .bento-grid { grid-template-columns: 1fr !important; }
+          .bento-grid > div { grid-column: span 1 !important; }
+          .import-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .footer-cols { grid-template-columns: 1fr 1fr !important; }
+          .testimonial-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) { .footer-cols { grid-template-columns: 1fr !important; } .stats-row { flex-direction: column; gap: 16px !important; } }
+      `}</style>
+      <Navbar t={t} menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
+      <MobileMenu open={menuOpen} onClose={()=>setMenuOpen(false)} t={t}/>
+      <Hero t={t}/>
+      <Services t={t}/>
+      <Platform t={t}/>
+      <ImportGenius t={t}/>
+      <WhyZerox t={t}/>
+      <Testimonials t={t}/>
+      <Pricing t={t}/>
+      <CtaFooter t={t}/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
