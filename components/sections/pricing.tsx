@@ -136,7 +136,7 @@ export function Pricing() {
 
                 <Button
                   asChild
-                  variant={plan.highlight ? "default" : "secondary"}
+                  variant={plan.highlight ? "primary" : "secondary"}
                   size="lg"
                   className={cn(
                     "w-full rounded-xl",
