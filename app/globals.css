@@ -1,0 +1,164 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+
+  --color-sky-brand: #87ceeb;
+  --color-sky-dim: rgba(135, 206, 235, 0.12);
+  --color-sky-glow: rgba(135, 206, 235, 0.28);
+
+  --color-ink: #0a0a0a;
+  --color-ink-2: #2d2d2d;
+  --color-ink-3: #4a5568;
+  --color-ink-4: #8896a5;
+  --color-ink-5: #c4cdd6;
+
+  --color-paper: #fafafa;
+  --color-paper-white: #ffffff;
+  --color-paper-warm: #fdfbf7;
+
+  --color-rule: #eeeeee;
+
+  --color-amber-import: #b45309;
+  --color-amber-import-dark: #92400e;
+
+  --animate-fade-up: fadeUp 0.6s ease both;
+  --animate-blob: blob 14s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 10s ease-in-out infinite;
+  --animate-ticker: ticker 24s linear infinite;
+  --animate-ping-slow: pingSlow 1.8s ease-out infinite;
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes blob {
+    0%,
+    100% {
+      border-radius: 60% 40% 54% 46% / 48% 56% 44% 52%;
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      border-radius: 45% 55% 40% 60% / 60% 40% 58% 42%;
+      transform: translate(16px, -18px) scale(1.04);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes ticker {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes pingSlow {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: rgba(135, 206, 235, 0.28);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4cdd6;
+  border-radius: 4px;
+}
+
+/* Animated sky underline on hero headline */
+.sky-underline {
+  position: relative;
+  display: inline;
+}
+.sky-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-sky-brand);
+  border-radius: 2px;
+  opacity: 0.7;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s;
+}
+.sky-underline.drawn::after {
+  transform: scaleX(1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sky-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
