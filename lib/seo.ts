@@ -70,8 +70,8 @@ export function buildMetadata(): Metadata {
       },
     },
     icons: {
-      icon: "/icon",
-      apple: "/apple-icon",
+      icon: "/favicon.ico",
+      apple: "/favicon.ico",
     },
     manifest: "/manifest.webmanifest",
     verification: {
@@ -93,7 +93,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/icon`,
+      url: `${SITE_URL}/logo.svg`,
       width: 512,
       height: 512,
     },

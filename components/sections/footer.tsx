@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Icon } from "@/components/icon";
 import { footer, siteConfig } from "@/lib/site-config";
 
@@ -10,12 +11,12 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-[2fr_1fr_1fr] gap-8 mb-10">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-3.5">
-              <span className="font-display font-bold text-lg text-white">
-                {siteConfig.name}
-              </span>
-              <span
-                aria-hidden
-                className="mt-0.5 h-1.5 w-1.5 rounded-full bg-sky-brand"
+              <Image
+                src="/footer_logo.svg"
+                alt={siteConfig.name}
+                width={100}
+                height={32}
+                className="h-8 w-auto"
               />
             </div>
             <p className="text-[13px] text-white/30 leading-[1.8] max-w-[260px]">

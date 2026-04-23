@@ -21,7 +21,7 @@ tailwind.config = {
         body: ['Plus Jakarta Sans', 'sans-serif'],
       },
       colors: {
-        sky: { brand: '#87CEEB', dim: 'rgba(135,206,235,0.12)', glow: 'rgba(135,206,235,0.28)' },
+        sky: { brand: '#00AEF7', dim: 'rgba(0,174,247,0.12)', glow: 'rgba(0,174,247,0.28)' },
         ink: { DEFAULT: '#0A0A0A', 2: '#2D2D2D', 3: '#4A5568', 4: '#8896A5', 5: '#C4CDD6' },
         paper: { DEFAULT: '#FAFAFA', white: '#FFFFFF', warm: '#FDFBF7' },
         rule: '#EEEEEE',
@@ -71,7 +71,7 @@ tailwind.config = {
   .sky-underline::after {
     content: '';
     position: absolute; bottom: -3px; left: 0; right: 0; height: 3px;
-    background: #87CEEB; border-radius: 2px; opacity: 0.7;
+    background: #00AEF7; border-radius: 2px; opacity: 0.7;
     transform: scaleX(0); transform-origin: left;
     transition: transform 1s cubic-bezier(.4,0,.2,1) 0.8s;
   }
@@ -98,10 +98,10 @@ tailwind.config = {
   .tr label { color: #4A5568; font-size: 12px; }
   .tr input[type=color] { width: 100%; height: 30px; border: 1px solid #eee; border-radius: 6px; cursor: pointer; padding: 2px; }
   .tr select { background: #fafafa; color: #0A0A0A; border: 1px solid #eee; border-radius: 6px; padding: 6px 8px; font-size: 12px; width: 100%; }
-  .tr input[type=range] { width: 100%; accent-color: #87CEEB; }
+  .tr input[type=range] { width: 100%; accent-color: #00AEF7; }
   .ttog { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .ttog label { color: #4A5568; font-size: 12px; }
-  .ttog input { accent-color: #87CEEB; }
+  .ttog input { accent-color: #00AEF7; }
 
   @media (max-width: 768px) {
     .nav-links { display: none !important; }
@@ -122,7 +122,7 @@ tailwind.config = {
 <div id="root"></div>
 <div id="tweak-panel">
   <h4>Tweaks</h4>
-  <div class="tr"><label>Accent color</label><input type="color" id="tw-accent" value="#87CEEB"/></div>
+  <div class="tr"><label>Accent color</label><input type="color" id="tw-accent" value="#00AEF7"/></div>
   <div class="tr"><label>Hero size</label><input type="range" id="tw-hs" min="40" max="88" value="68"/></div>
   <div class="tr"><label>Card radius</label><input type="range" id="tw-cr" min="4" max="24" value="12"/></div>
   <div class="tr"><label>Nav style</label><select id="tw-nav"><option value="glass">Glass blur</option><option value="solid">Solid white</option><option value="minimal">Minimal</option></select></div>
@@ -133,7 +133,7 @@ tailwind.config = {
 const { useState, useEffect, useRef } = React;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "#87CEEB",
+  "accent": "#00AEF7",
   "heroSize": 68,
   "cardRadius": 12,
   "navStyle": "glass",

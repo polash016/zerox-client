@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,12 +41,13 @@ export function Navbar() {
         className="flex items-center gap-2"
         aria-label={`${siteConfig.name} home`}
       >
-        <span className="font-display text-xl font-bold tracking-tight text-ink">
-          {siteConfig.name}
-        </span>
-        <span
-          aria-hidden
-          className="mt-0.5 h-[7px] w-[7px] shrink-0 rounded-full bg-sky-brand"
+        <Image
+          src="/logo.svg"
+          alt={siteConfig.name}
+          width={100}
+          height={32}
+          className="h-8 w-auto"
+          priority
         />
       </Link>
 
@@ -85,12 +87,12 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="flex items-center gap-2"
             >
-              <span className="font-display text-xl font-bold tracking-tight">
-                {siteConfig.name}
-              </span>
-              <span
-                aria-hidden
-                className="mt-0.5 h-[7px] w-[7px] rounded-full bg-sky-brand"
+              <Image
+                src="/logo.svg"
+                alt={siteConfig.name}
+                width={100}
+                height={32}
+                className="h-8 w-auto"
               />
             </Link>
             <SheetClose asChild>

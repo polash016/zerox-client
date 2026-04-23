@@ -50,7 +50,7 @@ export default function OpenGraphImage() {
               width: 12,
               height: 12,
               borderRadius: "50%",
-              background: "#87CEEB",
+              background: "#00AEF7",
               marginTop: 6,
             }}
           />
@@ -82,7 +82,7 @@ export default function OpenGraphImage() {
             }}
           >
             We don{"'"}t just support your ecommerce —{" "}
-            <span style={{ color: "#87CEEB" }}>we guarantee growth.</span>
+            <span style={{ color: "#00AEF7" }}>we guarantee growth.</span>
           </div>
         </div>
 

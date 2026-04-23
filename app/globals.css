@@ -5,9 +5,9 @@
   --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
   --font-sans: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
 
-  --color-sky-brand: #87ceeb;
-  --color-sky-dim: rgba(135, 206, 235, 0.12);
-  --color-sky-glow: rgba(135, 206, 235, 0.28);
+  --color-sky-brand: #00AEF7;
+  --color-sky-dim: rgba(0, 174, 247, 0.12);
+  --color-sky-glow: rgba(0, 174, 247, 0.28);
 
   --color-ink: #0a0a0a;
   --color-ink-2: #2d2d2d;
@@ -108,7 +108,7 @@ h4 {
 }
 
 ::selection {
-  background: rgba(135, 206, 235, 0.28);
+  background: rgba(0, 174, 247, 0.28);
 }
 
 ::-webkit-scrollbar {
